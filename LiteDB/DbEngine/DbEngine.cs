@@ -83,24 +83,46 @@ namespace LiteDB
         {
             lock (_locker)
             {
+                bool transactionStarted = _transaction.HasBegun();
                 try
                 {
-                    _transaction.Begin();
+                    if (transactionStarted == false)
+                        _transaction.Begin();
 
                     var col = this.GetCollectionPage(colName, addIfNotExists);
 
                     var result = action(col);
 
-                    _transaction.Commit();
+                    if (transactionStarted == false)
+                        _transaction.Commit();
 
                     return result;
                 }
                 catch (Exception ex)
                 {
                     _log.Write(Logger.ERROR, ex.Message);
-                    _transaction.Rollback();
+                    if (transactionStarted == false)
+                        _transaction.Rollback();
                     throw;
                 }
+            }
+        }
+        public void BeginTransaction()
+        {
+            _transaction.Begin();
+        }
+
+        public void CommitTransaction()
+        {
+            try
+            {
+                _transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                _log.Write(Logger.ERROR, ex.Message);
+                _transaction.Rollback();
+                throw;
             }
         }
 

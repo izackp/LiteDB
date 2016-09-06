@@ -8,7 +8,7 @@ namespace LiteDB
     /// Represent all cache system and track dirty pages. All pages that load and need to be track for
     /// dirty (to be persist after) must be added in this class.
     /// </summary>
-    internal class CacheService : IDisposable
+    public class CacheService : IDisposable
     {
         /// <summary>
         /// Max cache pages size - read or dirty. If Count pass this value cache will be clear on next checkpoint

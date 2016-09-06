@@ -15,7 +15,7 @@ namespace LiteDB
             _order = order;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             return indexer.FindAll(index, _order);
         }

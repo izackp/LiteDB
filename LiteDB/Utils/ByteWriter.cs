@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LiteDB
 {
-    internal unsafe class ByteWriter
+    public unsafe class ByteWriter
     {
         private byte[] _buffer;
         private int _pos;

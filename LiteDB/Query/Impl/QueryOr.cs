@@ -16,7 +16,7 @@ namespace LiteDB
             _right = right;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             throw new NotSupportedException();
         }

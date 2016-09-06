@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace LiteDB
 {
-    internal class PageService
+    public class PageService
     {
         private IDiskService _disk;
         private CacheService _cache;

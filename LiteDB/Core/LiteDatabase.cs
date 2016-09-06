@@ -55,6 +55,15 @@ namespace LiteDB
                 () => this.UpdateDbVersion(version));
         }
 
+        public void BeginTransaction()
+        {
+            _engine.Value.BeginTransaction();
+        }
+        public void CommitTransaction()
+        {
+            _engine.Value.CommitTransaction();
+        }
+
         public void Dispose()
         {
             if (_engine.IsValueCreated) _engine.Value.Dispose();

@@ -2,7 +2,7 @@
 
 namespace LiteDB
 {
-    internal class QueryEquals : Query
+    class QueryEquals : Query
     {
         private BsonValue _value;
 
@@ -12,7 +12,7 @@ namespace LiteDB
             _value = value;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             var value = _value.Normalize(index.Options);
             var node = indexer.Find(index, value, false, Query.Ascending);

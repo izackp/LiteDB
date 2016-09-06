@@ -13,7 +13,7 @@ namespace LiteDB
             _values = values;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             foreach (var value in _values.Distinct())
             {

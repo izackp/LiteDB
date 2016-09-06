@@ -12,7 +12,7 @@ namespace LiteDB
             _value = value;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             // find first indexNode
             var value = _value.Normalize(index.Options);

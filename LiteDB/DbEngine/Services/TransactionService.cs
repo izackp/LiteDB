@@ -12,6 +12,11 @@ namespace LiteDB
         private CacheService _cache;
         private bool _trans = false;
 
+        public bool HasBegun()
+        {
+            return _trans;
+        }
+
         internal TransactionService(IDiskService disk, PageService pager, CacheService cache)
         {
             _disk = disk;

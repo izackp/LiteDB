@@ -163,7 +163,7 @@ namespace LiteDB
         /// <summary>
         /// Abstract method that must be implement for index seek/scan - Returns IndexNodes that match with index
         /// </summary>
-        internal abstract IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index);
+        public abstract IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index);
 
         /// <summary>
         /// Find witch index will be used and run Execute method
