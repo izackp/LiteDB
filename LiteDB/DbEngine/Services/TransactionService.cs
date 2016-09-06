@@ -15,7 +15,7 @@ namespace LiteDB
 
         public bool HasBegun()
         {
-            return _trans;
+            return _activeTransactions.Count > 0;
         }
 
         internal TransactionService(IDiskService disk, PageService pager, CacheService cache)

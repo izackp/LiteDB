@@ -102,14 +102,14 @@ namespace LiteDB
             try
             {
                 if (transactionStarted == false)
-                    _transaction.Begin();
+                    _transaction.Begin(true);
 
                 var col = this.GetCollectionPage(colName, false);
 
                 var result = action(col);
 
                 if (transactionStarted == false)
-                    trans.Commit();
+                    _transaction.Complete();
 
                 return result;
             }
@@ -117,7 +117,7 @@ namespace LiteDB
             {
                 _log.Write(Logger.ERROR, ex.Message);
                 if (transactionStarted == false)
-                    trans.Rollback();
+                    _transaction.Abort();
                 throw;
             }
         }
@@ -131,13 +131,14 @@ namespace LiteDB
             try
             {
                 if (transactionStarted == false)
-                    _transaction.Begin();
+                    _transaction.Begin(false);
+
                 var col = this.GetCollectionPage(colName, addIfNotExists);
 
                 var result = action(col);
 
                 if (transactionStarted == false)
-                    _transaction.Commit();
+                    _transaction.Complete();
 
                 return result;
             }
@@ -146,26 +147,26 @@ namespace LiteDB
                 _log.Write(Logger.ERROR, ex.Message);
 
                 if (transactionStarted == false)
-                    _transaction.Rollback();
+                    _transaction.Abort();
 
                 throw;
             }
         }
-        public void BeginTransaction()
+        public void BeginTransaction(bool readOnly = false)
         {
-            _transaction.Begin();
+            _transaction.Begin(readOnly);
         }
 
         public void CommitTransaction()
         {
             try
             {
-                _transaction.Commit();
+                _transaction.Complete();
             }
             catch (Exception ex)
             {
                 _log.Write(Logger.ERROR, ex.Message);
-                _transaction.Rollback();
+                _transaction.Abort();
                 throw;
             }
         }

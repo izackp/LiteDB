@@ -15,7 +15,7 @@ namespace LiteDB
             _end = end;
         }
 
-        internal override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
+        public override IEnumerable<IndexNode> ExecuteIndex(IndexService indexer, CollectionIndex index)
         {
             var start = _start.Normalize(index.Options);
             var end = _end.Normalize(index.Options);
