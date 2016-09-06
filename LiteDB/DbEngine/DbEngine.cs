@@ -98,7 +98,6 @@ namespace LiteDB
         /// </summary>
         private T ReadTransaction<T>(string colName, Func<CollectionPage, T> action)
         {
-
             bool transactionStarted = _transaction.HasBegun();
             try
             {
@@ -109,14 +108,16 @@ namespace LiteDB
 
                 var result = action(col);
 
-                trans.Commit();
+                if (transactionStarted == false)
+                    trans.Commit();
 
                 return result;
             }
             catch (Exception ex)
             {
                 _log.Write(Logger.ERROR, ex.Message);
-                trans.Rollback();
+                if (transactionStarted == false)
+                    trans.Rollback();
                 throw;
             }
         }
@@ -126,8 +127,11 @@ namespace LiteDB
         /// </summary>
         private T WriteTransaction<T>(string colName, bool addIfNotExists, Func<CollectionPage, T> action)
         {
+            bool transactionStarted = _transaction.HasBegun();
             try
             {
+                if (transactionStarted == false)
+                    _transaction.Begin();
                 var col = this.GetCollectionPage(colName, addIfNotExists);
 
                 var result = action(col);
