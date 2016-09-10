@@ -42,7 +42,7 @@ namespace LiteDB
             return (T)result;
         }
 
-        #region Basic direct .NET convert types
+#region Basic direct .NET convert types
 
         // direct bson types
         private HashSet<Type> _bsonTypes = new HashSet<Type>
@@ -72,7 +72,7 @@ namespace LiteDB
             typeof(SByte)
         };
 
-        #endregion Basic direct .NET convert types
+#endregion Basic direct .NET convert types
 
         internal object Deserialize(Type type, BsonValue value)
         {

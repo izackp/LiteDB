@@ -26,7 +26,7 @@ namespace LiteDB
         /// </summary>
         public object ToObject(Type type, BsonDocument doc)
         {
-            return _mapper.ToObject(type, doc);
+            return null;
         }
 
         /// <summary>

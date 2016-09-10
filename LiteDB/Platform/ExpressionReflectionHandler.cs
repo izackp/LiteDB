@@ -1,3 +1,4 @@
+
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -41,18 +42,34 @@ namespace LiteDB.Platform
 
         public GenericSetter CreateGenericSetter(Type type, PropertyInfo propertyInfo, bool nonPublic)
         {
-            if (propertyInfo == null) throw new ArgumentNullException(nameof(propertyInfo));
+            if (propertyInfo == null) throw new ArgumentNullException(propertyInfo.ToString());
 
             if (!propertyInfo.CanWrite)
                 return null;
-
+                
             var obj = Expression.Parameter(typeof(object), "obj");
             var value = Expression.Parameter(typeof(object), "val");
             var accessor = Expression.Property(Expression.Convert(obj, propertyInfo.DeclaringType), propertyInfo);
-            var assign = Expression.Assign(accessor, Expression.Convert(value, propertyInfo.PropertyType));
+            var assign = ExpressionEx.Assign(accessor, Expression.Convert(value, propertyInfo.PropertyType));
             var conv = Expression.Convert(assign, typeof(object));
 
             return Expression.Lambda<GenericSetter>(conv, obj, value).Compile();
+        }
+    }
+}
+
+public static class ExpressionEx {
+    public static BinaryExpression Assign(Expression left, Expression right) {
+        var assign = typeof(Assigner<>).MakeGenericType(left.Type).GetMethod("Assign");
+
+        var assignExpr = Expression.Add(left, right, assign);
+
+        return assignExpr;
+    }
+
+    private static class Assigner<T> {
+        public static T Assign(ref T left, T right) {
+            return (left = right);
         }
     }
 }
