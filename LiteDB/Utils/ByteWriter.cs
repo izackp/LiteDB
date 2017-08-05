@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LiteDB
 {
-    public class ByteWriter
+    internal class ByteWriter
     {
         private byte[] _buffer;
         private int _pos;
@@ -48,6 +48,7 @@ namespace LiteDB
         public void Write(UInt16 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
 
@@ -57,6 +58,7 @@ namespace LiteDB
         public void Write(UInt32 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -68,6 +70,7 @@ namespace LiteDB
         public void Write(UInt64 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -83,6 +86,7 @@ namespace LiteDB
         public void Write(Int16 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
 
@@ -92,6 +96,7 @@ namespace LiteDB
         public void Write(Int32 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -103,6 +108,7 @@ namespace LiteDB
         public void Write(Int64 value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -118,6 +124,7 @@ namespace LiteDB
         public void Write(Single value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -129,6 +136,7 @@ namespace LiteDB
         public void Write(Double value)
         {
             var pi = BitConverter.GetBytes(value);
+
             _buffer[_pos + 0] = pi[0];
             _buffer[_pos + 1] = pi[1];
             _buffer[_pos + 2] = pi[2];
@@ -139,6 +147,16 @@ namespace LiteDB
             _buffer[_pos + 7] = pi[7];
 
             _pos += 8;
+        }
+
+        public void Write(Decimal value)
+        {
+            var array = Decimal.GetBits(value);
+
+            this.Write(array[0]);
+            this.Write(array[1]);
+            this.Write(array[2]);
+            this.Write(array[3]);
         }
 
         public void Write(Byte[] value)
