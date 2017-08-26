@@ -67,7 +67,7 @@ namespace LiteDB
             this.FreeBytes = 0; // no free bytes on collection-page - only one collection per page
         }
 
-#region Read/Write pages
+        #region Read/Write pages
 
         protected override void ReadContent(ByteReader reader)
         {
@@ -101,9 +101,9 @@ namespace LiteDB
             }
         }
 
-#endregion
+        #endregion
 
-#region Methods to work with index array
+        #region Methods to work with index array
 
         /// <summary>
         /// Returns first free index slot to be used
@@ -139,6 +139,6 @@ namespace LiteDB
             return this.Indexes.Where(x => x.IsEmpty == false && x.Slot >= (includePK ? 0 : 1));
         }
 
-#endregion
+        #endregion
     }
 }

@@ -231,7 +231,7 @@ namespace LiteDB
                 var tempFile = FileHelper.GetTempFile(_connectionString.Filename);
 
                 // get temp disk based on temp file
-                new FileDiskService(tempFile, false);
+                var tempDisk = new FileDiskService(tempFile, false);
 
                 var reduced = _engine.Value.Shrink(password);
 

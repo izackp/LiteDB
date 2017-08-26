@@ -269,9 +269,9 @@ namespace LiteDB
             return this;
         }
 
-#endregion
+        #endregion
 
-#region GetEntityMapper
+        #region GetEntityMapper
 
         /// <summary>
         /// Get property mapper between typed .NET class and BsonDocument - Cache results
@@ -435,9 +435,9 @@ namespace LiteDB
             return members;
         }
 
-#endregion
+        #endregion
 
-#region Register DbRef
+        #region Register DbRef
 
         /// <summary>
         /// Register a property mapper as DbRef to serialize/deserialize only document reference _id
@@ -543,6 +543,6 @@ namespace LiteDB
             };
         }
 
-#endregion
+        #endregion
     }
 }
