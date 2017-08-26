@@ -8,6 +8,9 @@ namespace LiteDB
 {
     public partial class BsonMapper
     {
+
+        //TODO: hack
+        public Dictionary<string, string> TypeMapper = new Dictionary<string, string>();
         /// <summary>
         /// Deserialize a BsonDocument to entity class
         /// </summary>
@@ -157,7 +160,11 @@ namespace LiteDB
                 // test if value is object and has _type
                 if (doc.RawValue.TryGetValue("_type", out typeField))
                 {
-                    typeField = typeField.AsString + sAssemblyName;
+                    string storedType = typeField.AsString;
+                    string resultType = null;
+                    if (TypeMapper.TryGetValue(storedType, out resultType))
+                        storedType = resultType;
+                    typeField = storedType + sAssemblyName;
                     type = Type.GetType(typeField.AsString);
 
                     if (type == null) throw LiteException.InvalidTypedName(typeField.AsString);

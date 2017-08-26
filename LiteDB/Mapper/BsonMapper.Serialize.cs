@@ -8,6 +8,7 @@ namespace LiteDB
 {
     public partial class BsonMapper
     {
+
         /// <summary>
         /// Serialize a entity class to BsonDocument
         /// </summary>
@@ -156,7 +157,11 @@ namespace LiteDB
             // adding _type only where property Type is not same as object instance type
             if (type != t)
             {
-                dict["_type"] = new BsonValue(t.FullName);
+                string storedType = t.FullName;
+                string resultType = null;
+                if (TypeMapper.TryGetValue(storedType, out resultType))
+                    storedType = resultType;
+                dict["_type"] = new BsonValue(storedType);
             }
 
             foreach (var member in entity.Members.Where(x => x.Getter != null))

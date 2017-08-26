@@ -3,7 +3,7 @@ using System.Text;
 
 namespace LiteDB
 {
-    internal class ByteReader
+    class ByteReader
     {
         private byte[] _buffer;
         private int _pos;

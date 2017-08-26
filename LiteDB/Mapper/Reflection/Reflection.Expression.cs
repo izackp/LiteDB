@@ -61,22 +61,6 @@ namespace LiteDB
                 fieldInfo.FieldType;
 
             return ((t, v) => propertyInfo.SetValue(Convert.ChangeType(t, type), Convert.ChangeType(v, dataType), null));
-            /*
-            var target = Expression.Parameter(typeof(object), "obj");
-            var value = Expression.Parameter(typeof(object), "val");
-
-            var castTarget = Expression.Convert(target, type);
-            var castValue = Expression.ConvertChecked(value, dataType);
-
-            var accessor = memberInfo is PropertyInfo ? 
-                Expression.Property(castTarget, propertyInfo) :
-                Expression.Field(castTarget, fieldInfo);
-
-            var assign = ExpressionExtensions.Assign(accessor, castValue);
-            var conv = Expression.Convert(assign, typeof(object));
-            
-            return Expression.Lambda<GenericSetter>(conv, target, value).Compile();
-            */
         }
     }
 }
